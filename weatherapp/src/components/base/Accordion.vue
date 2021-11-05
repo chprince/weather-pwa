@@ -4,7 +4,6 @@
       @click="toggleAccordion"
       class="accordion__toggle"
       :aria-expanded="state.isOpen"
-      :aria-controls="`collapse${_uid}`"
     >
       <h3 class="accordion__title"><slot name="title" /></h3>
       <svg
@@ -28,7 +27,7 @@
       </svg>
     </button>
 
-    <div v-show="state.isOpen" :id="`collapse${_uid}`">
+    <div v-show="state.isOpen">
       <slot name="content" />
     </div>
   </div>
@@ -39,17 +38,6 @@ import { reactive } from "vue";
 
 export default {
   name: "Accordion",
-  data() {
-    // return {
-    //   isOpen: false,
-    // };
-  },
-
-  methods: {
-    // toggleAccordion() {
-    //   this.isOpen = !this.isOpen;
-    // },
-  },
   setup() {
     const state = reactive({
       isOpen: false,

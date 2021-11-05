@@ -12,6 +12,7 @@
 import { reactive } from "vue";
 
 import store from "@/store/index";
+import router from "@/router/index";
 import WeatherResults from "@/components/WeatherResults";
 
 export default {
@@ -32,9 +33,18 @@ export default {
      */
     const state = reactive({});
 
+    const userHasData = () => {
+      if (!store.getters.userLocation) {
+        router.push("/");
+      }
+    };
+
+    userHasData();
+
     return {
       state,
       saveLocation,
+      userHasData,
     };
   },
 };

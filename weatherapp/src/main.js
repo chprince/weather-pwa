@@ -26,6 +26,5 @@ app.config.globalProperties.$filters = {
     }
 }
 
-console.log(app);
 app.use(router).use(store).use(VueAxios, axios)
 app.mount('#app')

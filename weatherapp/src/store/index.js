@@ -25,11 +25,7 @@ export default createStore({
       }
 
       if (localStorage.getItem('weatherResponse')) {
-        console.log(state.weather_response);
-        // state.weather_response = JSON.parse(localStorage.getItem('weatherResponse'));
         state.weather_response = localStorage.getItem('weatherResponse');
-        console.log("Set weather response from cookie");
-        console.log(state.weather_response);
       }
     },
     setUserIP(state, ip) {
@@ -46,9 +42,6 @@ export default createStore({
     setWeatherResponse(state, response) {
       state.weather_response = response;
       localStorage.setItem('weatherResponse', JSON.stringify(state.weather_response));
-      console.log("Set weather response to cookie");
-      console.log(state.weather_response)
-      console.log(localStorage);
     },
   },
   actions: {},
@@ -69,6 +62,9 @@ export default createStore({
     getUserLocation: state => {
       // return state.proxy_url;
       return state.geo_base + "reverse" + "?access_key=" + state.geo_api_key + "&query=";
+    },
+    findLocation: state => {
+      return state.geo_base + "forward" + "?access_key=" + state.geo_api_key + "&query=";
     },
     getUserIP: state => {
       return state.user_ip;

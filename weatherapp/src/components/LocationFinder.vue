@@ -1,7 +1,37 @@
 <template>
   <div class="location-finder">
     <h2>Location Finder</h2>
-
+    <div class="search-box">
+      <input
+        type="text"
+        name=""
+        id=""
+        class="search-bar"
+        placeholder="Search any city"
+        v-model="query"
+      />
+      <button @click="findLocation(query)" class="search-button">
+        <span class="visually-hidden">Search</span>
+      </button>
+      <!-- {{ state.searchResults }} -->
+      <div v-if="state.searchResults">
+        <select v-model="result" @change="setPreciseLocation(result)">
+          <option
+            v-for="location in state.searchResults.data"
+            v-bind:key="location.id"
+            test="my test"
+            v-bind:value="{
+              lat: location.latitude,
+              long: location.longitude,
+              name: location.name,
+            }"
+          >
+            {{ location.name }}, {{ location.region }}, {{ location.country }}
+          </option>
+        </select>
+      </div>
+      <!-- {{query}} -->
+    </div>
     <button @click="getUserLocation">Get my location</button>
     <div v-if="state.nearLocations">
       <select v-model="city" @change="setPreciseLocation(city)">
@@ -41,6 +71,8 @@ export default {
     const state = reactive({
       nearLocations: null,
       preciseLocation: "",
+      query: "",
+      searchResults: null,
     });
 
     // Get the user's current location based on their IP address
@@ -58,9 +90,15 @@ export default {
       });
     };
 
+    const findLocation = (query) => {
+      state.query = query;
+      axios.get(store.getters.findLocation + state.query).then((response) => {
+        state.searchResults = response.data;
+      });
+    };
+
     // Set the exact user location
     const setPreciseLocation = (location) => {
-      console.log(location);
       state.preciseLocation = location;
       store.commit("setUserLocation", location);
       router.push("/City");
@@ -69,6 +107,7 @@ export default {
     return {
       state,
       getUserLocation,
+      findLocation,
       setPreciseLocation,
     };
   },

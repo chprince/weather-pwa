@@ -1,6 +1,5 @@
 <template>
   <div>
-    <button @click="getWeather">Get weather</button>
     <div v-if="state.weatherResponse">
       <Accordion>
         <template v-slot:title>
@@ -51,11 +50,12 @@ export default {
         "&appid=" +
         store.getters.weatherKey;
       axios.get(url).then((response) => {
-        console.log(response);
         state.weatherResponse = response.data;
         store.commit("setWeatherResponse", response.data);
       });
     };
+
+    getWeather();
 
     return {
       state,

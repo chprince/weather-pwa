@@ -26,7 +26,7 @@
 
       <div v-if="state.weatherResponse">
         <hr />
-        {{ state.weatherResponse }}
+        <MinuteForecast :data="state.weatherResponse.minutely" />
       </div>
     </div>
   </div>
@@ -39,9 +39,13 @@ import store from "@/store/index";
 import axios from "axios";
 import { reactive } from "vue";
 
+import MinuteForecast from "@/components/MinuteForecast";
+
 export default {
   name: "Home",
-  components: {},
+  components: {
+    MinuteForecast,
+  },
   methods: {},
   setup() {
     /**

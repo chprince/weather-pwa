@@ -1,12 +1,7 @@
 <template>
   <div class="home">
     <LocationFinder />
-
     <RecentLocations />
-
-    <div v-if="$store.getters.userLocation">
-      <router-link to="/city">View weather</router-link>
-    </div>
   </div>
 </template>
 

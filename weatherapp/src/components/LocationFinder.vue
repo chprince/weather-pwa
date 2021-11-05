@@ -27,6 +27,7 @@ import { reactive } from "vue";
 
 import store from "@/store/index";
 import axios from "axios";
+import router from "@/router/index";
 
 export default {
   name: "LocationFinder",
@@ -62,6 +63,7 @@ export default {
       console.log(location);
       state.preciseLocation = location;
       store.commit("setUserLocation", location);
+      router.push("/City");
     };
 
     return {

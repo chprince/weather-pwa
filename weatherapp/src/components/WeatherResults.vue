@@ -1,7 +1,6 @@
 <template>
   <div>
     <button @click="getWeather">Get weather</button>
-    {{ $store.getters.weatherResponse }}
     <div v-if="state.weatherResponse">
       <Accordion>
         <template v-slot:title>

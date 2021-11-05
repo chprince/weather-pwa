@@ -6,7 +6,9 @@
         v-for="location in $store.getters.previousLocations"
         :key="location.name"
       >
-        {{ location.name }}
+        <button @click="setPreciseLocation(location)">
+          {{ location.name }}
+        </button>
       </li>
     </ul>
     <hr />
@@ -15,6 +17,8 @@
 
 <script>
 import { reactive } from "vue";
+import store from "@/store/index";
+import router from "@/router/index";
 
 export default {
   name: "RecentLocations",
@@ -30,8 +34,15 @@ export default {
       preciseLocation: "",
     });
 
+    // Set the exact user location
+    const setPreciseLocation = (location) => {
+      store.commit("setUserLocation", location);
+      router.push("/City");
+    };
+
     return {
       state,
+      setPreciseLocation,
     };
   },
 };

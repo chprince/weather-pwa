@@ -1,7 +1,7 @@
 <template>
   <div class="about">
     <h1>{{ $store.getters.userLocation.name }}</h1>
-    <button>Save Location</button>
+    <button @click="saveLocation">Save Location</button>
     <WeatherResults />
   </div>
 </template>
@@ -22,7 +22,10 @@ export default {
   methods: {},
   setup() {
     store.commit("initialiseStore");
-    store.commit("saveLocation", store.getters.userLocation);
+
+    const saveLocation = () => {
+      store.commit("saveLocation", store.getters.userLocation);
+    };
 
     /**
      * Set state
@@ -31,6 +34,7 @@ export default {
 
     return {
       state,
+      saveLocation,
     };
   },
 };

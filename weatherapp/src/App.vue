@@ -4,9 +4,6 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/city">City</router-link>
     </div>
-    {{ $filters.timeMinute() }}
-    {{ $store.getters.getApiKey }}
-    {{ $store.getters.getUserIP }}
     <router-view />
   </div>
 </template>

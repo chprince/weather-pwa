@@ -5,6 +5,7 @@
       <router-link to="/about">About</router-link>
     </div>
     {{ $store.getters.getApiKey }}
+    {{ $store.getters.getUserIP }}
     <router-view />
   </div>
 </template>

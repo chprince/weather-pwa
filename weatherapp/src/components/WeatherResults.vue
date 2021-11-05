@@ -1,12 +1,60 @@
 <template>
   <div>
     <div v-if="state.weatherResponse">
+      <div v-if="state.weatherResponse.current">
+        Local date/time:
+        {{
+          $filters.localDate(
+            state.weatherResponse.current.dt,
+            state.weatherResponse.timezone
+          )
+        }}
+      </div>
+
+      <Accordion>
+        <template v-slot:title>
+          <span>Current Weather</span>
+        </template>
+        <template v-slot:content>
+          <CurrentWeather
+            :data="state.weatherResponse.current"
+            :timezone="state.weatherResponse.timezone"
+          />
+        </template>
+      </Accordion>
+
       <Accordion>
         <template v-slot:title>
           <span>Rain next hour by minute</span>
         </template>
         <template v-slot:content>
-          <MinuteForecast :data="state.weatherResponse.minutely" />
+          <MinuteForecast
+            :data="state.weatherResponse.minutely"
+            :timezone="state.weatherResponse.timezone"
+          />
+        </template>
+      </Accordion>
+
+      <Accordion>
+        <template v-slot:title>
+          <span>Hourly Forecast</span>
+        </template>
+        <template v-slot:content>
+          <HourForecast
+            :data="state.weatherResponse.hourly"
+            :timezone="state.weatherResponse.timezone"
+          />
+        </template>
+      </Accordion>
+
+      <Accordion>
+        <template v-slot:title>
+          <span>All data</span>
+        </template>
+        <template v-slot:content>
+          Sunrise:
+          <!-- {{ $filters.timeMinute(state.weatherResponse.current) }}<br /> -->
+          {{ state.weatherResponse }}
         </template>
       </Accordion>
     </div>
@@ -20,6 +68,8 @@ import axios from "axios";
 import { reactive } from "vue";
 
 import MinuteForecast from "@/components/MinuteForecast";
+import HourForecast from "@/components/HourForecast";
+import CurrentWeather from "@/components/CurrentWeather";
 import Accordion from "@/components/base/Accordion";
 
 export default {
@@ -29,7 +79,9 @@ export default {
   },
   components: {
     MinuteForecast,
+    HourForecast,
     Accordion,
+    CurrentWeather,
   },
   setup() {
     /**
@@ -52,6 +104,7 @@ export default {
       axios.get(url).then((response) => {
         state.weatherResponse = response.data;
         store.commit("setWeatherResponse", response.data);
+        // console.log(state.weatherResponse);
       });
     };
 

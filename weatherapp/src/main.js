@@ -3,7 +3,7 @@ import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
-import moment from 'moment'
+import moment from 'moment-timezone'
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
@@ -21,8 +21,15 @@ app.config.globalProperties.$filters = {
     timeAgo(date) {
         return moment(date).fromNow()
     },
-    timeMinute(datetime) {
-        return moment.unix(datetime).utc().format("HH:mm");
+    timeMinute(datetime, tz) {
+        const date = moment.unix(datetime).utc();
+        const localDate = date.tz(tz);
+        return localDate.format("HH:mm");
+    },
+    localDate(datetime, tz) {
+        const date = moment.unix(datetime).utc();
+        const localDate = date.tz(tz);
+        return localDate;
     }
 }
 

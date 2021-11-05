@@ -25,8 +25,14 @@
       </div>
 
       <div v-if="state.weatherResponse">
-        <hr />
-        <MinuteForecast :data="state.weatherResponse.minutely" />
+        <Accordion>
+          <template v-slot:title>
+            <span class="font-semibold text-xl">Rain next hour by minute</span>
+          </template>
+          <template v-slot:content>
+            <MinuteForecast :data="state.weatherResponse.minutely" />
+          </template>
+        </Accordion>
       </div>
     </div>
   </div>
@@ -40,11 +46,13 @@ import axios from "axios";
 import { reactive } from "vue";
 
 import MinuteForecast from "@/components/MinuteForecast";
+import Accordion from "@/components/base/Accordion";
 
 export default {
   name: "Home",
   components: {
     MinuteForecast,
+    Accordion,
   },
   methods: {},
   setup() {

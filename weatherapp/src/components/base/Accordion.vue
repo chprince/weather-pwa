@@ -83,6 +83,7 @@ export default {
     width: 100%;
     background: transparent;
     border: none;
+    cursor: pointer;
   }
 
   &__title {

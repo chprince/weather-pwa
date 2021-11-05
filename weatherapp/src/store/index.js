@@ -7,11 +7,48 @@ export default createStore({
     geo_api_key: "e5aaa55ccda78d1400fa7cd1c6e1c65f",
     geo_base: "http://api.positionstack.com/v1/",
     proxy_url: "https://cors-anywhere.herokuapp.com/",
-    user_ip: ""
+    user_ip: "",
+    user_location: "",
+    previous_locations: [],
+    weather_response: null,
   },
   mutations: {
+    initialiseStore(state) {
+      // Check if the ID exists
+      if (localStorage.getItem('userLocation')) {
+        state.user_location = JSON.parse(localStorage.getItem('userLocation'))
+      }
+
+
+      if (localStorage.getItem('previousLocations')) {
+        state.previous_locations = JSON.parse(localStorage.getItem('previousLocations'))
+      }
+
+      if (localStorage.getItem('weatherResponse')) {
+        console.log(state.weather_response);
+        // state.weather_response = JSON.parse(localStorage.getItem('weatherResponse'));
+        state.weather_response = localStorage.getItem('weatherResponse');
+        console.log("Set weather response from cookie");
+        console.log(state.weather_response);
+      }
+    },
     setUserIP(state, ip) {
       state.user_ip = ip;
+    },
+    setUserLocation(state, location) {
+      state.user_location = location;
+      localStorage.setItem('userLocation', JSON.stringify(location));
+    },
+    saveLocation(state, location) {
+      state.previous_locations.push(location);
+      localStorage.setItem('previousLocations', JSON.stringify(state.previous_locations));
+    },
+    setWeatherResponse(state, response) {
+      state.weather_response = response;
+      localStorage.setItem('weatherResponse', JSON.stringify(state.weather_response));
+      console.log("Set weather response to cookie");
+      console.log(state.weather_response)
+      console.log(localStorage);
     },
   },
   actions: {},
@@ -36,5 +73,14 @@ export default createStore({
     getUserIP: state => {
       return state.user_ip;
     },
+    userLocation: state => {
+      return state.user_location;
+    },
+    previousLocations: state => {
+      return state.previous_locations;
+    },
+    weatherResponse: state => {
+      return state.weather_response;
+    }
   }
 });

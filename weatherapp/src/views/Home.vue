@@ -1,39 +1,11 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <button @click="getUserLocation">Get data</button>
-    <div v-if="state.nearLocations">
-      <select v-model="city" @change="setPreciseLocation(city)">
-        <option
-          v-for="location in state.nearLocations.data"
-          v-bind:key="location.id"
-          test="my test"
-          v-bind:value="{
-            lat: location.latitude,
-            long: location.longitude,
-            name: location.name,
-          }"
-        >
-          {{ location.name }}
-        </option>
-      </select>
+    <LocationFinder />
 
-      <div v-if="state.preciseLocation">
-        {{ state.preciseLocation }}
-        <hr />
-        <button @click="getWeather">Go</button>
-      </div>
+    <RecentLocations />
 
-      <div v-if="state.weatherResponse">
-        <Accordion>
-          <template v-slot:title>
-            <span class="font-semibold text-xl">Rain next hour by minute</span>
-          </template>
-          <template v-slot:content>
-            <MinuteForecast :data="state.weatherResponse.minutely" />
-          </template>
-        </Accordion>
-      </div>
+    <div v-if="$store.getters.userLocation">
+      <router-link to="/city">View weather</router-link>
     </div>
   </div>
 </template>
@@ -42,72 +14,28 @@
 // @ is an alias to /src
 
 import store from "@/store/index";
-import axios from "axios";
 import { reactive } from "vue";
 
-import MinuteForecast from "@/components/MinuteForecast";
-import Accordion from "@/components/base/Accordion";
+import LocationFinder from "@/components/LocationFinder";
+import RecentLocations from "@/components/RecentLocations";
 
 export default {
   name: "Home",
   components: {
-    MinuteForecast,
-    Accordion,
+    LocationFinder,
+    RecentLocations,
   },
   methods: {},
   setup() {
     /**
      * Set state
      */
-    const state = reactive({
-      nearLocations: null,
-      preciseLocation: "",
-      weatherResponse: null,
-    });
+    const state = reactive({});
 
-    // Get the user's current location based on their IP address
-    // To do: Ask for permission
-    const getUserLocation = () => {
-      const url = "https://api.ipify.org/?format=json";
-      axios.get(url).then((response) => {
-        store.commit("setUserIP", response.data.ip);
-
-        axios
-          .get(store.getters.getUserLocation + store.getters.getUserIP)
-          .then((response) => {
-            state.nearLocations = response.data;
-            console.log(response.data);
-          });
-      });
-    };
-
-    // Set the exact user location
-    const setPreciseLocation = (location) => {
-      console.log(location);
-      state.preciseLocation = location;
-    };
-
-    const getWeather = () => {
-      const url =
-        store.getters.weatherBase +
-        "onecall?lat=" +
-        state.preciseLocation.lat +
-        "&lon=" +
-        state.preciseLocation.long +
-        "&appid=" +
-        store.getters.weatherKey;
-      //https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&appid=
-      axios.get(url).then((response) => {
-        console.log(response);
-        state.weatherResponse = response.data;
-      });
-    };
+    store.commit("initialiseStore");
 
     return {
       state,
-      getUserLocation,
-      setPreciseLocation,
-      getWeather,
     };
   },
 };

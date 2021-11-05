@@ -16,6 +16,7 @@ const app = createApp(App)
 * @params {date} date to be converted to timeago
 * @returns returns timeAgo
 */
+
 app.config.globalProperties.$filters = {
     timeAgo(date) {
         return moment(date).fromNow()
@@ -24,5 +25,7 @@ app.config.globalProperties.$filters = {
         return moment.unix(datetime).utc().format("HH:mm");
     }
 }
+
+console.log(app);
 app.use(router).use(store).use(VueAxios, axios)
 app.mount('#app')

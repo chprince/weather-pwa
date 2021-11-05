@@ -1,8 +1,9 @@
 <template>
   <div class="minute-forecast">
+    Rain next hour
     <ul>
       <li v-for="item in data" :key="item.id">
-        {{ item }}
+        {{ $filters.timeMinute(item.dt) }}: {{ item.precipitation }}mm
       </li>
     </ul>
   </div>

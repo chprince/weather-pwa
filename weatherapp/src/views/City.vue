@@ -60,6 +60,7 @@ export default {
           previousLocations.splice(index, 1);
           store.commit("overriteSavedLocations", previousLocations);
           state.isSavedLocation = false;
+          break;
         }
       }
     };

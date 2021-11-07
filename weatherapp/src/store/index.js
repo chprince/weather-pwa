@@ -39,6 +39,10 @@ export default createStore({
       state.previous_locations.push(location);
       localStorage.setItem('previousLocations', JSON.stringify(state.previous_locations));
     },
+    overriteSavedLocations(state, locations) {
+      state.previous_locations = locations;
+      localStorage.setItem('previousLocations', JSON.stringify(state.previous_locations));
+    },
     setWeatherResponse(state, response) {
       state.weather_response = response;
       localStorage.setItem('weatherResponse', JSON.stringify(state.weather_response));

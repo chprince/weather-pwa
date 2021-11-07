@@ -1,9 +1,11 @@
 <template>
-  <div class="hour-forecast" v-if="data">
+  <div class="day-forecast" v-if="data">
     <ul>
       <li v-for="item in data" :key="item.id">
         {{ $filters.localDate(item.dt, timezone) }}
         <ul>
+          <li>Sunsrise: {{ $filters.timeMinute(item.sunrise, timezone) }}</li>
+          <li>Sunsrise: {{ $filters.timeMinute(item.sunset, timezone) }}</li>
           <li>Temp: {{ item.temp }} (c)</li>
           <li>Feels like: {{ item.feels_like }} (c)</li>
           <li>Pressure: {{ item.pressure }}</li>
@@ -43,7 +45,7 @@
 
 <script>
 export default {
-  name: "HourForecast",
+  name: "DayForecast",
   props: {
     data: Object,
     timezone: String,

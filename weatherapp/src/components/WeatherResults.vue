@@ -49,12 +49,13 @@
 
       <Accordion>
         <template v-slot:title>
-          <span>All data</span>
+          <span>Daily Forecast</span>
         </template>
         <template v-slot:content>
-          Sunrise:
-          <!-- {{ $filters.timeMinute(state.weatherResponse.current) }}<br /> -->
-          {{ state.weatherResponse }}
+          <DayForecast
+            :data="state.weatherResponse.daily"
+            :timezone="state.weatherResponse.timezone"
+          />
         </template>
       </Accordion>
     </div>
@@ -69,6 +70,7 @@ import { reactive } from "vue";
 
 import MinuteForecast from "@/components/MinuteForecast";
 import HourForecast from "@/components/HourForecast";
+import DayForecast from "@/components/DayForecast";
 import CurrentWeather from "@/components/CurrentWeather";
 import Accordion from "@/components/base/Accordion";
 
@@ -80,6 +82,7 @@ export default {
   components: {
     MinuteForecast,
     HourForecast,
+    DayForecast,
     Accordion,
     CurrentWeather,
   },
@@ -104,7 +107,6 @@ export default {
       axios.get(url).then((response) => {
         state.weatherResponse = response.data;
         store.commit("setWeatherResponse", response.data);
-        // console.log(state.weatherResponse);
       });
     };
 

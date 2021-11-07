@@ -8,7 +8,7 @@
 <script>
 // @ is an alias to /src
 
-import store from "@/store/index";
+// import store from "@/store/index";
 import { reactive } from "vue";
 
 import LocationFinder from "@/components/LocationFinder";
@@ -27,7 +27,7 @@ export default {
      */
     const state = reactive({});
 
-    store.commit("initialiseStore");
+    // store.commit("initialiseStore");
 
     return {
       state,

@@ -13,7 +13,7 @@
       <button @click="findLocation(query)" class="search-button">
         <span class="visually-hidden">Search</span>
       </button>
-      <!-- {{ state.searchResults }} -->
+      {{ state.searchResults }}
       <div v-if="state.searchResults">
         <select v-model="result" @change="setPreciseLocation(result)">
           <option
@@ -26,7 +26,7 @@
               name: location.name,
             }"
           >
-            {{ location.name }}, {{ location.region }}, {{ location.country }}
+            {{ location.name }}, {{ location.region }} {{ location.country }}
           </option>
         </select>
       </div>
@@ -86,6 +86,14 @@ export default {
           .get(store.getters.getUserLocation + store.getters.getUserIP)
           .then((response) => {
             state.nearLocations = response.data;
+            const closestLocation = {
+              name: state.nearLocations.data[0].region,
+              lat: state.nearLocations.data[0].latitude,
+              long: state.nearLocations.data[0].longitude,
+            };
+
+            setPreciseLocation(closestLocation);
+            // console.log();
           });
       });
     };
@@ -100,6 +108,7 @@ export default {
     // Set the exact user location
     const setPreciseLocation = (location) => {
       state.preciseLocation = location;
+      console.log(location);
       store.commit("setUserLocation", location);
       router.push("/City");
     };

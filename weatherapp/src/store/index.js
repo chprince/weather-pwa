@@ -11,14 +11,15 @@ export default createStore({
     user_location: "",
     previous_locations: [],
     weather_response: null,
+    user_units: "metric"
   },
   mutations: {
     initialiseStore(state) {
+      console.log(localStorage)
       // Check if the ID exists
-      if (localStorage.getItem('userLocation')) {
+      if (localStorage.getItem('userLocation') !== 'undefined') {
         state.user_location = JSON.parse(localStorage.getItem('userLocation'))
       }
-
 
       if (localStorage.getItem('previousLocations')) {
         state.previous_locations = JSON.parse(localStorage.getItem('previousLocations'))
@@ -27,9 +28,17 @@ export default createStore({
       if (localStorage.getItem('weatherResponse')) {
         state.weather_response = localStorage.getItem('weatherResponse');
       }
+
+      if (localStorage.getItem('userUnits')) {
+        state.user_units = localStorage.getItem('userUnits');
+      }
     },
     setUserIP(state, ip) {
       state.user_ip = ip;
+    },
+    setUserUnits(state, units) {
+      state.user_units = units;
+      localStorage.setItem('userUnits', units);
     },
     setUserLocation(state, location) {
       state.user_location = location;
@@ -81,6 +90,9 @@ export default createStore({
     },
     weatherResponse: state => {
       return state.weather_response;
+    },
+    userUnits: state => {
+      return state.user_units;
     }
   }
 });

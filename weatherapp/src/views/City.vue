@@ -27,7 +27,7 @@ export default {
   },
   methods: {},
   setup() {
-    store.commit("initialiseStore");
+    // store.commit("initialiseStore");
 
     /**
      * Set state

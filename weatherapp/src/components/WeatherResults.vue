@@ -101,9 +101,11 @@ export default {
         store.getters.userLocation.lat +
         "&lon=" +
         store.getters.userLocation.long +
-        "&units=metric" +
+        "&units=" +
+        store.getters.userUnits +
         "&appid=" +
         store.getters.weatherKey;
+      console.log(url);
       axios.get(url).then((response) => {
         state.weatherResponse = response.data;
         store.commit("setWeatherResponse", response.data);

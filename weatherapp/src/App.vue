@@ -2,10 +2,38 @@
   <div>
     <div id="nav">
       <router-link to="/">Home</router-link>
+      <router-link to="/settings">Settings</router-link>
+      {{ $store.getters.userUnits }}
     </div>
     <router-view />
   </div>
 </template>
+
+
+<script>
+// @ is an alias to /src
+
+import store from "@/store/index";
+import { reactive } from "vue";
+
+export default {
+  name: "Settings",
+  components: {},
+  methods: {},
+  setup() {
+    /**
+     * Set state
+     */
+    const state = reactive({});
+
+    store.commit("initialiseStore");
+
+    return {
+      state,
+    };
+  },
+};
+</script>
 
 <style lang="scss">
 #app {

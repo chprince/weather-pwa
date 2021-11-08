@@ -5,6 +5,7 @@
       <router-link to="/settings">Settings</router-link>
       {{ $store.getters.userUnits }}
     </div>
+    <LocationFinder />
     <router-view />
   </div>
 </template>
@@ -16,9 +17,13 @@
 import store from "@/store/index";
 import { reactive } from "vue";
 
+import LocationFinder from "@/components/LocationFinder";
+
 export default {
   name: "Settings",
-  components: {},
+  components: {
+    LocationFinder,
+  },
   methods: {},
   setup() {
     /**

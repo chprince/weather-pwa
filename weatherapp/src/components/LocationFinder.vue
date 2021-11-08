@@ -1,5 +1,5 @@
 <template>
-  <div class="location-finder">
+  <div class="location-finder" v-if="$route.name !== 'Settings'">
     <h2>Location Finder</h2>
     <div class="search-box">
       <input
@@ -13,7 +13,6 @@
       <button @click="findLocation(query)" class="search-button">
         <span class="visually-hidden">Search</span>
       </button>
-      {{ state.searchResults }}
       <div v-if="state.searchResults">
         <select v-model="result" @change="setPreciseLocation(result)">
           <option

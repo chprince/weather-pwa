@@ -91,6 +91,7 @@ export default {
      * Set state
      */
     const state = reactive({
+      userLocation: store.getters.userLocation,
       weatherResponse: store.getters.weatherResponse,
     });
 
@@ -118,6 +119,16 @@ export default {
       state,
       getWeather,
     };
+  },
+  computed: {
+    watchUserLocation() {
+      return store.getters.userLocation;
+    },
+  },
+  watch: {
+    watchUserLocation() {
+      this.getWeather();
+    },
   },
 };
 </script>

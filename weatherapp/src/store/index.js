@@ -5,7 +5,7 @@ export default createStore({
     api_key: "1698ad14266892027f713998c5613169",
     url_base: "https://api.openweathermap.org/data/2.5/",
     geo_api_key: "e5aaa55ccda78d1400fa7cd1c6e1c65f",
-    geo_base: "https://api.positionstack.com/v1/",
+    geo_base: "http://api.positionstack.com/v1/",
     proxy_url: "https://cors-anywhere.herokuapp.com/",
     user_ip: "",
     user_location: "",

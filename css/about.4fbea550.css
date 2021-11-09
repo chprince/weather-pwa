@@ -1,0 +1,1 @@
+.accordion{border-top:1px solid #000;border-bottom:1px solid #000}.accordion+.accordion{border-top:none}.accordion__toggle{display:flex;justify-content:space-between;align-items:center;width:100%;background:transparent;border:none;cursor:pointer}.accordion__title{font-size:1.5em}.accordion svg{width:24px}.accordion svg.rotate-180{transform:rotate(180deg)}
